@@ -1,16 +1,20 @@
 # NIKKE start
-43.152.156.141 cloud.nikke-kr.com
-43.152.156.141 nikke-en.com
-43.155.96.21 jp-lobby.nikke-kr.com
-43.155.96.21 kr-lobby.nikke-kr.com
-43.155.96.21 global-lobby.nikke-kr.com
-43.155.96.21 sea-lobby.nikke-kr.com
-43.155.96.21 hmt-lobby.nikke-kr.com
-43.155.96.21 jp-match.nikke-kr.com
-43.155.96.21 us-match.nikke-kr.com
-43.155.96.21 kr-match.nikke-kr.com
-43.155.96.21 global-match.nikke-kr.com
-43.155.96.21 sea-match.nikke-kr.com
-43.155.96.21 hmt-match.nikke-kr.com
-43.155.96.21 aws-na.intlgame.com
+107.155.58.219 cloud.nikke-kr.com # download data
+107.155.58.219 nikke-en.com # download data
+43.132.248.209 jp-lobby.nikke-kr.com
+43.132.248.209 kr-lobby.nikke-kr.com
+43.132.248.209 global-lobby.nikke-kr.com
+43.132.248.209 sea-lobby.nikke-kr.com
+43.132.248.209 hmt-lobby.nikke-kr.com
+43.132.248.209 jp-match.nikke-kr.com
+43.132.248.209 kr-match.nikke-kr.com
+43.132.248.209 global-match.nikke-kr.com
+43.132.248.209 sea-match.nikke-kr.com
+43.132.248.209 hmt-match.nikke-kr.com
+43.132.248.209 aws-na.intlgame.com
 # NIKKE end
+
+# download data backup
+# 43.152.14.83 cloud.nikke-kr.com
+# 43.152.14.83 nikke-en.com
+
