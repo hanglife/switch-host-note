@@ -1,17 +1,15 @@
 # NIKKE start
-128.1.102.212 cloud.nikke-kr.com
-128.1.102.212 nikke-en.com
-43.155.96.21 jp-lobby.nikke-kr.com
-43.155.96.21 kr-lobby.nikke-kr.com
-43.155.96.21 global-lobby.nikke-kr.com
-43.155.96.21 sea-lobby.nikke-kr.com
-43.155.96.21 hmt-lobby.nikke-kr.com
-43.155.96.21 jp-match.nikke-kr.com
-43.155.96.21 kr-match.nikke-kr.com
-43.155.96.21 global-match.nikke-kr.com
-43.155.96.21 sea-match.nikke-kr.com
-43.155.96.21 hmt-match.nikke-kr.com
-43.155.96.21 aws-na.intlgame.com
+43.132.85.180 cloud.nikke-kr.com
+43.132.85.180 nikke-en.com
+43.132.248.209 jp-lobby.nikke-kr.com
+43.132.248.209 kr-lobby.nikke-kr.com
+43.132.248.209 global-lobby.nikke-kr.com
+43.132.248.209 sea-lobby.nikke-kr.com
+43.132.248.209 hmt-lobby.nikke-kr.com
+43.132.248.209 jp-match.nikke-kr.com
+43.132.248.209 kr-match.nikke-kr.com
+43.132.248.209 global-match.nikke-kr.com
+43.132.248.209 sea-match.nikke-kr.com
+43.132.248.209 hmt-match.nikke-kr.com
+43.132.248.209 aws-na.intlgame.com
 # NIKKE end
-
-
