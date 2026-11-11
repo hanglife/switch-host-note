@@ -1,0 +1,985 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'; img-src data:; base-uri 'none'; form-action 'none'"><title>墨鱼 Safe V5｜Clash Verge / FlClash 脚本</title><style>
+:root{color-scheme:dark;--bg:#10151d;--card:#1a2230;--panel:#101722;--text:#eef3fa;--muted:#b0bfd1;--line:#354255;--accent:#8ddcd1;--button:#263346;--warning:#ffdda3}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.65}main{max-width:1240px;margin:auto;padding:32px 24px 48px}header{margin-bottom:24px}.kicker,.eyebrow{font-size:12px;letter-spacing:.1em;color:var(--accent);font-weight:650}h1{font-size:32px;line-height:1.25;margin:10px 0 12px;font-weight:730;letter-spacing:-.03em}h2{font-size:23px;margin:3px 0 0}h3{font-size:16px;margin:22px 0 6px}.lead{color:var(--muted);max-width:940px;margin:0}a{color:var(--accent);text-underline-offset:3px}.notice{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:14px 17px;margin:20px 0;color:var(--muted)}.notice strong{color:var(--text)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}.card{min-width:0;border:1px solid var(--line);border-radius:15px;padding:20px;background:var(--card)}.card-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.badge{font-size:12px;color:var(--accent);border:1px solid var(--line);border-radius:99px;padding:3px 9px;white-space:nowrap}.path{font-size:13px;color:var(--muted);margin:12px 0 16px}.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}button{font:inherit;font-size:13px;border:1px solid var(--line);border-radius:8px;background:var(--button);color:var(--text);padding:8px 12px;cursor:pointer}button:hover{filter:brightness(1.15)}button:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}button.primary{background:var(--accent);color:#102522;border-color:var(--accent);font-weight:700}textarea{display:block;width:100%;height:280px;max-height:280px;min-height:160px;resize:vertical;overflow:auto;border:1px solid var(--line);border-radius:9px;background:var(--panel);color:var(--text);font:12px/1.65 ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;padding:14px;tab-size:2;white-space:pre}.meta{display:flex;justify-content:space-between;gap:12px;font-size:11px;color:var(--muted);margin-top:8px}.status{font-size:12px;min-height:20px;color:var(--accent);margin:8px 0 0}.hash{font-size:11px;color:var(--muted);margin:10px 0 0}.hash code{display:block;word-break:break-all;margin-top:8px}.hash p{margin:6px 0 0}.help{margin-top:20px;border:1px solid var(--line);border-radius:12px;padding:14px 18px;background:var(--card)}summary{cursor:pointer;font-weight:650}details p{color:var(--muted);margin:10px 0}code{font: .92em ui-monospace,SFMono-Regular,Consolas,monospace}table{border-collapse:collapse;width:100%;font-size:14px;margin:14px 0}th,td{text-align:left;vertical-align:top;border-bottom:1px solid var(--line);padding:10px 12px}th{color:var(--accent)}.warn{color:var(--warning)}.sources{display:flex;gap:8px 20px;flex-wrap:wrap;font-size:13px}footer{font-size:12px;color:var(--muted);margin-top:22px}.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);border:0}@media(max-width:800px){main{padding:24px 14px 36px}.grid{grid-template-columns:1fr}h1{font-size:27px}.card{padding:17px}textarea{font-size:12px;height:260px;max-height:280px}.meta{font-size:10px}.notice{font-size:14px}th,td{padding:9px 6px;font-size:13px}}</style></head>
+<body><main><header><div class="kicker">MOYU SAFE · 2026.11.11</div><h1>两个客户端，一套可检查的分流逻辑</h1><p class="lead">Clash Verge Rev 主用 · FlClash 备用。完整脚本放在限高文本框中，可编辑、全选复制或保存成 .js；此页面可以离线打开，不会执行文本框中的代理脚本，也不会上传任何内容。</p></header>
+<div class="notice"><strong>默认用稳定模式。</strong>保留机场原分流，前置个人直连与常用服务规则，不新增旧版 21 个远程规则集下载。完整远程模式仍在代码内保留，但不默认启用。先确认原始订阅能用，再绑定脚本。</div>
+<div class="grid"><section class="card" aria-labelledby="title-verge">
+<div class="card-head"><div><span class="eyebrow">01 · 主用</span><h2 id="title-verge">Clash Verge Rev</h2></div><span class="badge">V5.0.0</span></div>
+<p class="path">订阅 → 右键机场 → 扩展脚本</p>
+<div class="toolbar"><button class="primary" data-act="copy" data-target="verge">复制完整脚本</button><button data-act="download" data-target="verge">下载 .js</button><button data-act="reset" data-target="verge">恢复原稿</button></div>
+<label class="sr-only" for="code-verge">Clash Verge Rev 完整脚本，可编辑</label>
+<textarea id="code-verge" data-file="ClashVerge_V5_resend_dd127314.js" spellcheck="false" autocorrect="off" autocapitalize="off" autocomplete="off" wrap="off">/*
+ * 墨鱼思路适配 · Safe V5.0.0 · 2026-11-11
+ * 非墨鱼作者官方脚本。安装位置见本文件末尾的 main() 与随附说明。
+ * 默认 stable：本地个性化规则 + 原订阅规则，不新增远程规则下载。
+ * 可选 moyu-full：保留 V4 的 21 个远程规则集合；有联网/缓存依赖，非默认。
+ * 保留节点、provider、原策略组；不修改 DNS/TUN/端口/模式/IPv6/证书校验。
+ * 严格的结构/引用预检不等于 Mihomo 内核校验，更不能证明真实节点可用。
+ * 脚本不访问网络/文件，不打印订阅内容或令牌，不用 eval / require。
+ */
+
+function moyuSafeV5(input, client) {
+  &quot;use strict&quot;;
+  // ===== 可编辑选项：通常无需修改 =====
+  var options = {
+    ruleMode: &quot;stable&quot;,             // &quot;stable&quot; 推荐；&quot;moyu-full&quot; 启用旧版远程规则
+    preferredAiNode: &quot;&quot;,
+    repairMissingPROXY: true,        // 仅修复规则/策略组中不存在的字面量 PROXY
+    hideOriginalGroups: false,      // 默认保留机场原分组的可见性
+    enableAdBlock: false,           // 仅 moyu-full 可用；稳定版不增加广告下载
+    blockChatGPTQUIC: false,        // 不默认封禁 UDP/QUIC
+    directDomains: [&quot;digital-xian.com&quot;, &quot;cnwest.com&quot;, &quot;seagm.com&quot;, &quot;seagm-media.seagmcdn.com&quot;],
+    proxyDomains: [],               // 只写域名，不写 URL；走“全部节点”
+    extraRules: []                  // 高级：完整 Mihomo 规则；目标必须真实存在
+  };
+  var revision = &quot;5.0.0&quot;;
+  var marker = &quot;x-moyu-safe-v5&quot;;
+  var ownedPrefix = &quot;moyu_safe_v5_&quot;;
+  var notices = [];
+  var stats = { repairedPROXY: 0 };
+  function object(v) { return v !== null &amp;&amp; typeof v === &quot;object&quot; &amp;&amp; !Array.isArray(v); }
+  function has(o, k) { return Object.prototype.hasOwnProperty.call(o, k); }
+  function dict() { return Object.create(null); }
+  function fail(code, message) { throw new Error(&quot;[MOYU_V5:&quot; + code + &quot;] &quot; + message); }
+  function note(message) { if (notices.length &lt; 12) notices.push(message); }
+  function emit(message) {
+    if (typeof console !== &quot;undefined&quot; &amp;&amp; typeof console.log === &quot;function&quot;) console.log(message);
+  }
+  function array(v, where) {
+    if (v == null) return [];
+    if (!Array.isArray(v)) fail(&quot;TYPE&quot;, where + &quot; 必须是数组。请检查原订阅或其它覆写。&quot;);
+    return v;
+  }
+  function map(v, where) {
+    if (v == null) return {};
+    if (!object(v)) fail(&quot;TYPE&quot;, where + &quot; 必须是对象。&quot;);
+    return v;
+  }
+  function name(v, where) {
+    if (typeof v !== &quot;string&quot; || !v.trim() || /[\r\n\0]/.test(v)) fail(&quot;NAME&quot;, where + &quot; 名称为空或含非法换行。&quot;);
+    return v;
+  }
+  function unique(values) {
+    var seen = dict();
+    return values.filter(function (v) { if (has(seen, v)) return false; seen[v] = true; return true; });
+  }
+  function domains(values, where) {
+    return array(values, where).map(function (d) {
+      if (typeof d !== &quot;string&quot;) fail(&quot;DOMAIN&quot;, where + &quot; 必须仅包含域名字符串。&quot;);
+      d = d.trim().toLowerCase();
+      if (!/^(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9-]+$/.test(d)) {
+        fail(&quot;DOMAIN&quot;, where + &quot; 只接受域名，不接受协议、路径、端口、通配符或逗号。&quot;);
+      }
+      return d;
+    });
+  }
+  if (!object(input)) fail(&quot;INPUT&quot;, &quot;需绑定已有机场订阅；输入不是配置对象。&quot;);
+  if (options.ruleMode !== &quot;stable&quot; &amp;&amp; options.ruleMode !== &quot;moyu-full&quot;) fail(&quot;OPTION&quot;, &quot;ruleMode 只能为 stable / moyu-full。&quot;);
+  if (input[&quot;x-moyu-verge-adapter&quot;]) fail(&quot;OLD_V4&quot;, &quot;检测到 V4 仍在上游执行。请清除旧脚本/覆写，只保留本订阅的 V5。&quot;);
+  if (options.enableAdBlock &amp;&amp; options.ruleMode !== &quot;moyu-full&quot;) note(&quot;稳定版未启用远程广告集；enableAdBlock 仅在 moyu-full 生效。&quot;);
+  // 所有修改发生在副本；任一检查失败，都不会留下半修改的输入。
+  var c;
+  try { c = JSON.parse(JSON.stringify(input)); }
+  catch (e) { fail(&quot;JSON&quot;, &quot;配置不是可序列化对象；未修改原输入。&quot;); }
+  var old = c[marker];
+  var reapply = object(old) &amp;&amp; old.family === &quot;moyu-safe-v5&quot;;
+  if (old != null &amp;&amp; !reapply) fail(&quot;MARKER&quot;, &quot;已有未知同名标记；请检查其它覆写。&quot;);
+  var nodes = array(c.proxies, &quot;proxies&quot;);
+  var providers = map(c[&quot;proxy-providers&quot;], &quot;proxy-providers&quot;);
+  var ruleProviders = map(c[&quot;rule-providers&quot;], &quot;rule-providers&quot;);
+  var groups = array(c[&quot;proxy-groups&quot;], &quot;proxy-groups&quot;);
+  var originalRules = array(c.rules, &quot;rules&quot;);
+  var subRules = map(c[&quot;sub-rules&quot;], &quot;sub-rules&quot;);
+  var providerNames = Object.keys(providers);
+  // 删除的是带有本脚本标记的自身产物，不靠模糊名称删除机场内容。
+  if (reapply) {
+    var previousNames = dict();
+    array(old.groupNames, &quot;V5.groupNames&quot;).forEach(function (n) { previousNames[n] = true; });
+    groups = groups.filter(function (g) { return !(object(g) &amp;&amp; has(previousNames, g.name)); });
+    var previousPrefix = array(old.addedRules, &quot;V5.addedRules&quot;);
+    if (previousPrefix.some(function (r, i) { return originalRules[i] !== r; })) {
+      fail(&quot;REAPPLY_CHANGED&quot;, &quot;V5 前缀被其它脚本改写。请只保留一个扩展，并从原始订阅重新应用。&quot;);
+    }
+    originalRules = originalRules.slice(previousPrefix.length);
+    if (old.appendedFinal) {
+      if (originalRules[originalRules.length - 1] !== old.appendedFinal) fail(&quot;REAPPLY_CHANGED&quot;, &quot;V5 兜底被其它脚本改写；请从原始订阅重新应用。&quot;);
+      originalRules.pop();
+    }
+    array(old.ruleProviderNames, &quot;V5.ruleProviderNames&quot;).forEach(function (n) { delete ruleProviders[n]; });
+    delete c[marker];
+    if (old.ruleMode === &quot;moyu-full&quot; &amp;&amp; options.ruleMode === &quot;stable&quot;) {
+      fail(&quot;RELOAD_SOURCE&quot;, &quot;从完整模式切回稳定模式，请重新应用原始订阅；不要把最终运行配置当作订阅原文。&quot;);
+    }
+  }
+  if (!nodes.length &amp;&amp; !providerNames.length) {
+    emit(&quot;[MOYU_V5:SKIP_EMPTY] 没有节点或 provider；跳过增强，未创建占位节点。请先导入有效订阅。&quot;);
+    return input;
+  }
+  var builtins = [&quot;DIRECT&quot;, &quot;REJECT&quot;, &quot;REJECT-DROP&quot;, &quot;PASS&quot;, &quot;PASS-RULE&quot;, &quot;COMPATIBLE&quot;, &quot;GLOBAL&quot;];
+  var all = dict(), nodeByName = dict(), groupByName = dict();
+  builtins.forEach(function (n) { all[n] = &quot;builtin&quot;; });
+  var nonProxyTypes = [&quot;direct&quot;, &quot;reject&quot;, &quot;reject-drop&quot;, &quot;rejectdrop&quot;, &quot;pass&quot;, &quot;pass-rule&quot;, &quot;passrule&quot;, &quot;compatible&quot;, &quot;dns&quot;];
+  var concrete = [];
+  nodes.forEach(function (n, i) {
+    if (!object(n)) fail(&quot;NODE&quot;, &quot;proxies[&quot; + i + &quot;] 不是节点对象。&quot;);
+    name(n.name, &quot;proxies[&quot; + i + &quot;]&quot;);
+    if (has(all, n.name)) fail(&quot;DUPLICATE&quot;, &quot;节点重名/占用保留名：&quot; + n.name);
+    if (typeof n.type !== &quot;string&quot; || !n.type) fail(&quot;NODE_TYPE&quot;, &quot;节点缺少 type：&quot; + n.name);
+    all[n.name] = &quot;node&quot;; nodeByName[n.name] = n;
+    if (nonProxyTypes.indexOf(n.type.toLowerCase()) &lt; 0) concrete.push(n.name);
+  });
+  groups.forEach(function (g, i) {
+    if (!object(g)) fail(&quot;GROUP&quot;, &quot;proxy-groups[&quot; + i + &quot;] 不是对象。&quot;);
+    name(g.name, &quot;proxy-groups[&quot; + i + &quot;]&quot;);
+    if (has(all, g.name) &amp;&amp; g.name !== &quot;GLOBAL&quot;) fail(&quot;DUPLICATE&quot;, &quot;节点/策略组重名：&quot; + g.name);
+    if (has(groupByName, g.name)) fail(&quot;DUPLICATE&quot;, &quot;策略组重名：&quot; + g.name);
+    if (typeof g.type !== &quot;string&quot; || !g.type) fail(&quot;GROUP_TYPE&quot;, &quot;策略组缺少 type：&quot; + g.name);
+    all[g.name] = &quot;group&quot;; groupByName[g.name] = g;
+    if (options.hideOriginalGroups &amp;&amp; g.name !== &quot;GLOBAL&quot;) g.hidden = true;
+  });
+  if (!concrete.length &amp;&amp; !providerNames.length) fail(&quot;NO_PROXY&quot;, &quot;只有直连/拒绝出站，没有可供代理使用的节点。&quot;);
+  providerNames.forEach(function (n) {
+    name(n, &quot;proxy-providers&quot;);
+    var p = providers[n];
+    if (!object(p)) fail(&quot;PROVIDER&quot;, &quot;proxy-providers.&quot; + n + &quot; 不是对象。&quot;);
+    if ([&quot;http&quot;, &quot;file&quot;, &quot;inline&quot;].indexOf(p.type) &lt; 0) fail(&quot;PROVIDER_TYPE&quot;, &quot;节点源类型不是 http/file/inline：&quot; + n);
+    if (p.type === &quot;http&quot; &amp;&amp; (typeof p.url !== &quot;string&quot; || !/^https?:\/\//i.test(p.url))) fail(&quot;PROVIDER_URL&quot;, &quot;HTTP 节点源缺少有效 URL：&quot; + n);
+    if (p.type === &quot;file&quot; &amp;&amp; (typeof p.path !== &quot;string&quot; || !p.path)) fail(&quot;PROVIDER_PATH&quot;, &quot;本地节点源缺少 path：&quot; + n);
+    if (p.type === &quot;inline&quot; &amp;&amp; !Array.isArray(p.payload)) fail(&quot;PROVIDER_PAYLOAD&quot;, &quot;inline 节点源缺少 payload 数组：&quot; + n);
+    if (typeof p.url === &quot;string&quot; &amp;&amp; /^https?:\/\/(?:www\.)?t\.me\/ddgksf2021\.yaml(?:[?#/]|$)/i.test(p.url)) {
+      fail(&quot;TEMPLATE&quot;, &quot;发现墨鱼模板占位节点源；这不是机场订阅，请移除旧 YAML 覆写。&quot;);
+    }
+  });
+  // 名称碰撞时分配新名称；从不覆盖机场同名节点/策略组。
+  function allocate(base) {
+    var n = base, i = 2;
+    while (has(all, n) || has(providers, n)) { n = base + &quot; #&quot; + i; i++; }
+    all[n] = &quot;group&quot;;
+    return n;
+  }
+  var G = {
+    manual: allocate(&quot;🚀 墨鱼V5·全部节点&quot;), ai: allocate(&quot;🤖 墨鱼V5·AI&quot;),
+    global: allocate(&quot;🌏 墨鱼V5·全球代理&quot;), media: allocate(&quot;🎬 墨鱼V5·国际媒体&quot;),
+    google: allocate(&quot;🌌 墨鱼V5·谷歌服务&quot;), telegram: allocate(&quot;📟 墨鱼V5·电报消息&quot;),
+    apple: allocate(&quot;🍎 墨鱼V5·苹果服务&quot;), microsoft: allocate(&quot;🪟 墨鱼V5·微软服务&quot;),
+    bilibili: allocate(&quot;📺 墨鱼V5·哔哩哔哩&quot;), game: allocate(&quot;🎮 墨鱼V5·游戏平台&quot;),
+    download: allocate(&quot;📥 墨鱼V5·下载分流&quot;), fallback: allocate(&quot;🐟 墨鱼V5·兜底分流&quot;)
+  };
+  function selectable(n, first, preferred) {
+    var choices = unique(first.concat(concrete));
+    if (preferred &amp;&amp; concrete.indexOf(preferred) &gt;= 0) {
+      choices = [preferred].concat(choices.filter(function (x) { return x !== preferred; }));
+    }
+    var g = { name: n, type: &quot;select&quot;, &quot;empty-fallback&quot;: &quot;REJECT&quot; };
+    // provider-only 绝不把 REJECT 塞入 proxies；节点源展开后自然取真实节点。
+    if (choices.length) g.proxies = choices;
+    if (providerNames.length) g.use = providerNames.slice();
+    if (preferred &amp;&amp; concrete.indexOf(preferred) &gt;= 0) g[&quot;default-selected&quot;] = preferred;
+    return g;
+  }
+  var generated = [selectable(G.manual, [], &quot;&quot;), selectable(G.ai, [], options.preferredAiNode)];
+  [&quot;global&quot;, &quot;media&quot;, &quot;google&quot;, &quot;telegram&quot;, &quot;fallback&quot;].forEach(function (key) {
+    generated.push(selectable(G[key], [G.manual, &quot;DIRECT&quot;], &quot;&quot;));
+  });
+  [&quot;apple&quot;, &quot;microsoft&quot;, &quot;bilibili&quot;, &quot;game&quot;, &quot;download&quot;].forEach(function (key) {
+    generated.push(selectable(G[key], [&quot;DIRECT&quot;, G.manual], &quot;&quot;));
+  });
+  generated.forEach(function (g) { groupByName[g.name] = g; });
+  if (options.preferredAiNode &amp;&amp; concrete.indexOf(options.preferredAiNode) &lt; 0) {
+    note(&quot;旧首选 AI 节点不在静态节点中；未写入失效 default-selected，请在 AI 组选择可用具体节点。&quot;);
+  }
+  function requireTarget(target, where, mayRepair) {
+    name(target, where);
+    if (has(all, target)) return target;
+    if (target === &quot;PROXY&quot; &amp;&amp; options.repairMissingPROXY &amp;&amp; mayRepair) {
+      stats.repairedPROXY++; return G.manual;
+    }
+    fail(&quot;MISSING_TARGET&quot;, where + &quot; 引用不存在的目标：&quot; + target + &quot;。未擅自改为 DIRECT；请修复来源配置。&quot;);
+  }
+  function requireProvider(n, where) {
+    if (!has(providers, n)) fail(&quot;MISSING_PROVIDER&quot;, where + &quot; 引用了未定义的节点源：&quot; + n);
+  }
+  // 筛选表达式属于内核语义（含 regexp2），不能用 JS 正则近似后误报循环。
+  // 仍校验所有引用；只把确定存在的关系纳入脚本层循环检查。
+  function dynamicSelection(g) { return !!(g.filter || g[&quot;exclude-filter&quot;] || g[&quot;exclude-type&quot;]); }
+  // 检查组引用、节点链式拨号与 provider 下载出口。
+  var edges = dict();
+  Object.keys(groupByName).forEach(function (n) { edges[n] = []; });
+  Object.keys(nodeByName).forEach(function (n) { edges[n] = []; });
+  Object.keys(groupByName).forEach(function (n) {
+    var g = groupByName[n];
+    if (g.proxies != null) {
+      g.proxies = unique(array(g.proxies, n + &quot;.proxies&quot;).map(function (p) { return requireTarget(p, n + &quot;.proxies&quot;, true); }));
+      edges[n] = g.proxies.filter(function (p) {
+        return all[p] === &quot;group&quot; || !(g[&quot;exclude-filter&quot;] || g[&quot;exclude-type&quot;]);
+      });
+    }
+    array(g.use, n + &quot;.use&quot;).forEach(function (p) { requireProvider(p, n + &quot;.use&quot;); });
+    if ((g[&quot;include-all&quot;] || g[&quot;include-all-proxies&quot;]) &amp;&amp; !dynamicSelection(g)) {
+      edges[n] = edges[n].concat(Object.keys(nodeByName));
+    }
+    if (dynamicSelection(g)) note(&quot;含筛选表达式的动态节点依赖交由内核验证，脚本不据此臆测循环。&quot;);
+    if (!array(g.proxies, n + &quot;.proxies&quot;).length &amp;&amp; !array(g.use, n + &quot;.use&quot;).length &amp;&amp; !g[&quot;include-all&quot;] &amp;&amp; !g[&quot;include-all-proxies&quot;] &amp;&amp; !g[&quot;include-all-providers&quot;]) {
+      fail(&quot;EMPTY_GROUP&quot;, &quot;策略组没有候选节点/节点源：&quot; + n);
+    }
+    if (g[&quot;empty-fallback&quot;] != null) {
+      var fallback = requireTarget(g[&quot;empty-fallback&quot;], n + &quot;.empty-fallback&quot;, false);
+      if (all[fallback] === &quot;group&quot; || fallback === &quot;GLOBAL&quot;) fail(&quot;FALLBACK_GROUP&quot;, &quot;empty-fallback 只能填节点/内置出站，不能填策略组：&quot; + n);
+    }
+  });
+  Object.keys(nodeByName).forEach(function (n) {
+    var p = nodeByName[n];
+    if (p[&quot;dialer-proxy&quot;]) edges[n].push(requireTarget(p[&quot;dialer-proxy&quot;], n + &quot;.dialer-proxy&quot;, false));
+  });
+  providerNames.forEach(function (n) {
+    var p = providers[n];
+    // 下载出口是启动依赖；不能凭空把缺失 PROXY 指向含自身的组。
+    if (p.proxy) requireTarget(p.proxy, &quot;节点源 &quot; + n + &quot;.proxy&quot;, false);
+    var override = map(p.override, &quot;节点源 &quot; + n + &quot;.override&quot;);
+    if (override[&quot;dialer-proxy&quot;]) {
+      var target = requireTarget(override[&quot;dialer-proxy&quot;], &quot;节点源 &quot; + n + &quot;.override.dialer-proxy&quot;, false);
+      Object.keys(groupByName).forEach(function (gn) {
+        var g = groupByName[gn];
+        if (!dynamicSelection(g) &amp;&amp; (array(g.use, gn + &quot;.use&quot;).indexOf(n) &gt;= 0 || g[&quot;include-all&quot;] || g[&quot;include-all-providers&quot;])) edges[gn].push(target);
+      });
+    }
+    if (p.type === &quot;inline&quot;) array(p.payload, &quot;节点源 &quot; + n + &quot;.payload&quot;).forEach(function (entry, i) {
+      if (!object(entry) || !entry.name || !entry.type) fail(&quot;INLINE_NODE&quot;, &quot;inline 节点条目缺失 name/type：&quot; + n + &quot;[&quot; + i + &quot;]&quot;);
+      if (entry[&quot;dialer-proxy&quot;]) {
+        var t = requireTarget(entry[&quot;dialer-proxy&quot;], &quot;inline 节点 dialer-proxy&quot;, false);
+        Object.keys(groupByName).forEach(function (gn) {
+          var g = groupByName[gn];
+          if (!dynamicSelection(g) &amp;&amp; (array(g.use, gn + &quot;.use&quot;).indexOf(n) &gt;= 0 || g[&quot;include-all&quot;] || g[&quot;include-all-providers&quot;])) edges[gn].push(t);
+        });
+      }
+    });
+  });
+  // 非递归 DFS：大型配置不因递归栈耗尽而崩溃。
+  function checkCycles(graph, label) {
+    var color = dict();
+    Object.keys(graph).forEach(function (root) {
+      if (color[root] === 2) return;
+      var stack = [{ n: root, i: 0 }]; color[root] = 1;
+      while (stack.length) {
+        var frame = stack[stack.length - 1];
+        var links = graph[frame.n] || [];
+        if (frame.i &gt;= links.length) { color[frame.n] = 2; stack.pop(); continue; }
+        var next = links[frame.i++];
+        if (!has(graph, next)) continue;
+        if (color[next] === 1) fail(&quot;CYCLE&quot;, label + &quot; 存在循环依赖，涉及：&quot; + next);
+        if (color[next] !== 2) { color[next] = 1; stack.push({ n: next, i: 0 }); }
+      }
+    });
+  }
+  checkCycles(edges, &quot;节点/策略组&quot;);
+  // 自定义规则优先；已知的共享字节域名沿用旧版，不额外扩展范围。
+  var rules = [];
+  function add(type, values, target) {
+    values.forEach(function (v) { rules.push(type + &quot;,&quot; + v + &quot;,&quot; + target); });
+  }
+  var localRules = [
+    &quot;IP-CIDR,100.64.0.0/10,DIRECT,no-resolve&quot;,
+    &quot;IP-CIDR6,fd7a:115c:a1e0::/48,DIRECT,no-resolve&quot;,
+    &quot;DOMAIN-SUFFIX,ts.net,DIRECT&quot;,
+    &quot;PROCESS-NAME,tailscaled.exe,DIRECT&quot;,
+    &quot;PROCESS-NAME,tailscale.exe,DIRECT&quot;,
+    &quot;PROCESS-NAME,tailscale-ipn.exe,DIRECT&quot;,
+    &quot;DOMAIN-SUFFIX,localhost,DIRECT&quot;,
+    &quot;DOMAIN-SUFFIX,local,DIRECT&quot;,
+    &quot;DOMAIN-SUFFIX,lan,DIRECT&quot;,
+    &quot;IP-CIDR,127.0.0.0/8,DIRECT,no-resolve&quot;,
+    &quot;IP-CIDR,10.0.0.0/8,DIRECT,no-resolve&quot;,
+    &quot;IP-CIDR,172.16.0.0/12,DIRECT,no-resolve&quot;,
+    &quot;IP-CIDR,192.168.0.0/16,DIRECT,no-resolve&quot;,
+    &quot;IP-CIDR,169.254.0.0/16,DIRECT,no-resolve&quot;,
+    &quot;IP-CIDR6,::1/128,DIRECT,no-resolve&quot;,
+    &quot;IP-CIDR6,fc00::/7,DIRECT,no-resolve&quot;,
+    &quot;IP-CIDR6,fe80::/10,DIRECT,no-resolve&quot;
+  ];
+  rules = rules.concat(localRules);
+  add(&quot;DOMAIN-SUFFIX&quot;, domains(options.directDomains, &quot;directDomains&quot;), &quot;DIRECT&quot;);
+  var feishuDomains = [
+    &quot;feishu.cn&quot;, &quot;feishu.net&quot;, &quot;feishucdn.com&quot;, &quot;feishuimg.com&quot;,
+    &quot;feishuapp.cn&quot;, &quot;getfeishu.cn&quot;, &quot;feishupkg.com&quot;,
+    &quot;feishu-3rd-party-services.com&quot;, &quot;baseopendev.com&quot;, &quot;larkoffice.com&quot;,
+    &quot;zjurl.cn&quot;, &quot;snssdk.com&quot;, &quot;pstatp.com&quot;, &quot;byteimg.com&quot;,
+    &quot;bytedance.net&quot;, &quot;bytedance.com&quot;, &quot;byted-static.com&quot;,
+    &quot;bytegoofy.com&quot;, &quot;bytehwm.com&quot;, &quot;ttwebview.com&quot;, &quot;bytegecko.com&quot;,
+    &quot;bytescm.com&quot;, &quot;kundou.cn&quot;, &quot;bytetos.com&quot;, &quot;ibytedtos.com&quot;,
+    &quot;zijieapi.com&quot;, &quot;byteeffecttos.com&quot;, &quot;bytednsdoc.com&quot;,
+    &quot;bytedanceapi.com&quot;, &quot;volcvideo.com&quot;, &quot;bytevcloud.com&quot;, &quot;feelgood.cn&quot;
+  ];
+  add(&quot;DOMAIN-SUFFIX&quot;, feishuDomains, &quot;DIRECT&quot;);
+  add(&quot;PROCESS-NAME&quot;, [&quot;Feishu.exe&quot;, &quot;feishu.exe&quot;, &quot;Lark.exe&quot;, &quot;lark.exe&quot;], &quot;DIRECT&quot;);
+  add(&quot;DOMAIN-SUFFIX&quot;, domains(options.proxyDomains, &quot;proxyDomains&quot;), G.global);
+  array(options.extraRules, &quot;extraRules&quot;).forEach(function (r) {
+    if (typeof r === &quot;string&quot; &amp;&amp; /^\s*(MATCH|FINAL)\s*,/i.test(r)) fail(&quot;EXTRA_MATCH&quot;, &quot;extraRules 不得提前插入 MATCH/FINAL，以免吞掉后续所有规则。&quot;);
+    rules.push(r);
+  });
+  var aiDomains = [
+    &quot;chatgpt.com&quot;, &quot;openai.com&quot;, &quot;oaistatic.com&quot;, &quot;oaiusercontent.com&quot;, &quot;oaistatsig.com&quot;,
+    &quot;claude.ai&quot;, &quot;claude.com&quot;, &quot;anthropic.com&quot;, &quot;claudeusercontent.com&quot;, &quot;grok.com&quot;, &quot;x.ai&quot;
+  ];
+  var chatgptExactDomains = [
+    &quot;challenges.cloudflare.com&quot;, &quot;cdn.openaimerge.com&quot;,
+    &quot;cdn.workos.com&quot;, &quot;forwarder.workos.com&quot;,
+    &quot;frontend-apps-multi-region.workos.com&quot;, &quot;setup.workos.com&quot;,
+    &quot;images.workoscdn.com&quot;, &quot;workos.imgix.net&quot;
+  ];
+  // Gemini / Copilot 只加入明确域名，不把所有 Google/Microsoft 域名划入 AI。
+  aiDomains = aiDomains.concat([&quot;gemini.google.com&quot;, &quot;aistudio.google.com&quot;, &quot;generativelanguage.googleapis.com&quot;, &quot;copilot.microsoft.com&quot;]);
+  if (options.blockChatGPTQUIC) {
+    [&quot;chatgpt.com&quot;, &quot;openai.com&quot;, &quot;oaistatic.com&quot;, &quot;oaiusercontent.com&quot;, &quot;oaistatsig.com&quot;].forEach(function (d) {
+      rules.push(&quot;AND,((NETWORK,UDP),(DST-PORT,443),(DOMAIN-SUFFIX,&quot; + d + &quot;)),REJECT&quot;);
+    });
+  }
+  add(&quot;DOMAIN&quot;, chatgptExactDomains, G.ai);
+  add(&quot;DOMAIN-SUFFIX&quot;, aiDomains, G.ai);
+  add(&quot;PROCESS-NAME&quot;, [&quot;Codex.exe&quot;, &quot;codex.exe&quot;], G.ai);
+  var ownedRuleProviders = [];
+  if (options.ruleMode === &quot;moyu-full&quot;) {
+    var bmBase = &quot;https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/&quot;;
+    var metaBase = &quot;https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/&quot;;
+    var specs = [
+    [&quot;openai&quot;, metaBase + &quot;geosite/openai.list&quot;, &quot;domain&quot;, &quot;text&quot;, G.ai],
+    [&quot;anthropic&quot;, metaBase + &quot;geosite/anthropic.list&quot;, &quot;domain&quot;, &quot;text&quot;, G.ai],
+    [&quot;gemini&quot;, metaBase + &quot;geosite/google-gemini.list&quot;, &quot;domain&quot;, &quot;text&quot;, G.ai],
+    [&quot;xai&quot;, metaBase + &quot;geosite/xai.list&quot;, &quot;domain&quot;, &quot;text&quot;, G.ai],
+    [&quot;biliintl&quot;, metaBase + &quot;geosite/biliintl.list&quot;, &quot;domain&quot;, &quot;text&quot;, G.media],
+    [&quot;bilibili&quot;, bmBase + &quot;BiliBili/BiliBili.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.bilibili],
+    [&quot;bahamut&quot;, bmBase + &quot;Bahamut/Bahamut.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.media],
+    [&quot;media&quot;, bmBase + &quot;GlobalMedia/GlobalMedia_Classical.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.media],
+    [&quot;github&quot;, bmBase + &quot;GitHub/GitHub.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.global],
+    [&quot;telegram_domain&quot;, metaBase + &quot;geosite/telegram.list&quot;, &quot;domain&quot;, &quot;text&quot;, G.telegram],
+    [&quot;telegram_ip&quot;, metaBase + &quot;geoip/telegram.mrs&quot;, &quot;ipcidr&quot;, &quot;mrs&quot;, G.telegram],
+    [&quot;twitter&quot;, bmBase + &quot;Twitter/Twitter.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.global],
+    [&quot;google&quot;, bmBase + &quot;Google/Google.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.google],
+    [&quot;download&quot;, bmBase + &quot;Download/Download.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.download],
+    [&quot;apple&quot;, bmBase + &quot;Apple/Apple_Classical.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.apple],
+    [&quot;microsoft&quot;, bmBase + &quot;Microsoft/Microsoft.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.microsoft],
+    [&quot;game&quot;, bmBase + &quot;Game/Game.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.game],
+    [&quot;proxy&quot;, bmBase + &quot;ProxyLite/ProxyLite.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.global],
+    [&quot;direct&quot;, bmBase + &quot;Direct/Direct.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, &quot;DIRECT&quot;],
+    [&quot;cn_domain&quot;, metaBase + &quot;geosite/cn.mrs&quot;, &quot;domain&quot;, &quot;mrs&quot;, &quot;DIRECT&quot;],
+    [&quot;cn_ip&quot;, metaBase + &quot;geoip/cn.mrs&quot;, &quot;ipcidr&quot;, &quot;mrs&quot;, &quot;DIRECT&quot;]
+  ];
+    if (options.enableAdBlock) specs.splice(4, 0, [&quot;ads&quot;, metaBase + &quot;geosite/category-ads-all.mrs&quot;, &quot;domain&quot;, &quot;mrs&quot;, &quot;REJECT&quot;]);
+    add(&quot;DOMAIN-SUFFIX&quot;, [&quot;github.com&quot;, &quot;githubusercontent.com&quot;, &quot;githubassets.com&quot;], G.global);
+    specs.forEach(function (spec) {
+      var id = ownedPrefix + spec[0];
+      if (has(ruleProviders, id)) fail(&quot;PROVIDER_COLLISION&quot;, &quot;规则集合重名：&quot; + id);
+      ruleProviders[id] = { type: &quot;http&quot;, behavior: spec[2], format: spec[3], url: spec[1],
+        path: &quot;./ruleset/moyu-safe-v5/&quot; + spec[0] + &quot;.&quot; + (spec[3] === &quot;text&quot; ? &quot;list&quot; : spec[3]),
+        interval: 86400, proxy: G.manual };
+      ownedRuleProviders.push(id);
+      if (spec[0] === &quot;telegram_domain&quot;) add(&quot;PROCESS-NAME&quot;, [&quot;Telegram.exe&quot;, &quot;telegram-desktop&quot;], G.telegram);
+      rules.push(&quot;RULE-SET,&quot; + id + &quot;,&quot; + spec[4] + (spec[2] === &quot;classical&quot; || spec[0] === &quot;telegram_ip&quot; ? &quot;,no-resolve&quot; : &quot;&quot;));
+    });
+    rules.push(&quot;MATCH,&quot; + G.fallback);
+    note(&quot;moyu-full 已接管原订阅 rules；新增远程规则集合，网络失败仍可能影响初始化/更新。&quot;);
+  } else {
+    // 稳定版的本地分类是常见域名集合，并非 21 个远程集合的完整离线镜像。
+    add(&quot;DOMAIN-SUFFIX&quot;, [&quot;biliintl.com&quot;, &quot;bilibili.tv&quot;, &quot;bahamut.com.tw&quot;, &quot;gamer.com.tw&quot;, &quot;netflix.com&quot;, &quot;netflix.net&quot;, &quot;nflxvideo.net&quot;, &quot;nflximg.net&quot;, &quot;nflxso.net&quot;, &quot;nflxext.com&quot;, &quot;disneyplus.com&quot;, &quot;dssott.com&quot;, &quot;bamgrid.com&quot;, &quot;youtube.com&quot;, &quot;youtu.be&quot;, &quot;ytimg.com&quot;, &quot;googlevideo.com&quot;, &quot;spotify.com&quot;, &quot;scdn.co&quot;], G.media);
+    add(&quot;DOMAIN-SUFFIX&quot;, [&quot;steamcontent.com&quot;, &quot;steamserver.net&quot;, &quot;download.windowsupdate.com&quot;, &quot;dl.delivery.mp.microsoft.com&quot;, &quot;swdownload.apple.com&quot;, &quot;updates.cdn-apple.com&quot;], G.download);
+    add(&quot;DOMAIN-SUFFIX&quot;, [&quot;bilibili.com&quot;, &quot;biliapi.net&quot;, &quot;biliapi.com&quot;, &quot;bilivideo.com&quot;, &quot;bilivideo.cn&quot;, &quot;hdslb.com&quot;], G.bilibili);
+    add(&quot;DOMAIN-SUFFIX&quot;, [&quot;telegram.org&quot;, &quot;telegram.me&quot;, &quot;t.me&quot;, &quot;telegra.ph&quot;, &quot;tdesktop.com&quot;], G.telegram);
+    add(&quot;PROCESS-NAME&quot;, [&quot;Telegram.exe&quot;, &quot;telegram-desktop&quot;], G.telegram);
+    add(&quot;DOMAIN-SUFFIX&quot;, [&quot;github.com&quot;, &quot;githubusercontent.com&quot;, &quot;githubassets.com&quot;, &quot;twitter.com&quot;, &quot;x.com&quot;, &quot;t.co&quot;, &quot;twimg.com&quot;], G.global);
+    add(&quot;DOMAIN-SUFFIX&quot;, [&quot;google.com&quot;, &quot;googleapis.com&quot;, &quot;gstatic.com&quot;, &quot;googleusercontent.com&quot;, &quot;gmail.com&quot;], G.google);
+    add(&quot;DOMAIN-SUFFIX&quot;, [&quot;steampowered.com&quot;, &quot;steamcommunity.com&quot;, &quot;steamstatic.com&quot;, &quot;epicgames.com&quot;, &quot;playstation.com&quot;, &quot;playstation.net&quot;, &quot;sonyentertainmentnetwork.com&quot;, &quot;xbox.com&quot;, &quot;xboxlive.com&quot;, &quot;ubisoft.com&quot;, &quot;battle.net&quot;, &quot;ea.com&quot;, &quot;origin.com&quot;, &quot;riotgames.com&quot;], G.game);
+    add(&quot;DOMAIN-SUFFIX&quot;, [&quot;apple.com&quot;, &quot;icloud.com&quot;, &quot;icloud-content.com&quot;, &quot;mzstatic.com&quot;, &quot;apple-cloudkit.com&quot;], G.apple);
+    add(&quot;DOMAIN-SUFFIX&quot;, [&quot;microsoft.com&quot;, &quot;microsoftonline.com&quot;, &quot;live.com&quot;, &quot;outlook.com&quot;, &quot;office.com&quot;, &quot;office.net&quot;, &quot;office365.com&quot;, &quot;onedrive.com&quot;, &quot;windows.com&quot;, &quot;windowsupdate.com&quot;, &quot;bing.com&quot;], G.microsoft);
+  }
+  // 从右侧识别目标，避免把 AND/OR 条件内的逗号误当策略组分隔符。
+  // 完整语法/正则/CIDR 合法性仍交由 Mihomo；这里不伪装成完整内核解析器。
+  function parseRule(rule, where) {
+    if (typeof rule !== &quot;string&quot; || !rule.trim()) fail(&quot;RULE&quot;, where + &quot; 必须是非空规则字符串。&quot;);
+    var parts = rule.split(&quot;,&quot;);
+    var type = parts[0].trim().toUpperCase();
+    var index = parts.length - 1;
+    while (index &gt; 0 &amp;&amp; /^(no-resolve|src)$/i.test(parts[index].trim())) index--;
+    if (index &lt; (type === &quot;MATCH&quot; || type === &quot;FINAL&quot; ? 1 : 2)) fail(&quot;RULE&quot;, where + &quot; 缺少条件或目标。&quot;);
+    return { parts: parts, type: type, index: index, target: parts[index].trim() };
+  }
+  var subEdges = dict();
+  Object.keys(subRules).forEach(function (n) { subEdges[n] = []; });
+  function inspectRule(rule, where, subName) {
+    var parsed = parseRule(rule, where), target = parsed.target;
+    if (parsed.type === &quot;SUB-RULE&quot;) {
+      if (!has(subRules, target)) fail(&quot;MISSING_SUBRULE&quot;, where + &quot; 引用未定义子规则：&quot; + target);
+      if (subName) subEdges[subName].push(target);
+    } else {
+      var resolved = requireTarget(target, where, true);
+      if (resolved !== target) parsed.parts[parsed.index] = resolved;
+    }
+    if (parsed.type === &quot;FINAL&quot;) parsed.parts[0] = &quot;MATCH&quot;;
+    if (parsed.type === &quot;RULE-SET&quot;) {
+      var id = parsed.parts[1].trim();
+      if (!has(ruleProviders, id)) fail(&quot;MISSING_RULESET&quot;, where + &quot; 引用未定义规则集：&quot; + id);
+    }
+    // 逻辑条件中也可以嵌套 RULE-SET。
+    if (/^(AND|OR|NOT|SUB-RULE)$/.test(parsed.type)) {
+      var expression = /\(\s*RULE-SET\s*,\s*([^,()]+)/ig, hit;
+      while ((hit = expression.exec(rule)) !== null) {
+        if (!has(ruleProviders, hit[1].trim())) fail(&quot;MISSING_RULESET&quot;, where + &quot; 内嵌未定义规则集：&quot; + hit[1].trim());
+      }
+    }
+    return parsed.parts.join(&quot;,&quot;);
+  }
+  var addedRules = rules.map(function (r, i) { return inspectRule(r, &quot;新增 rules[&quot; + i + &quot;]&quot;, &quot;&quot;); });
+  var retained = [], appendedFinal = &quot;&quot;;
+  if (options.ruleMode === &quot;stable&quot;) {
+    retained = originalRules.map(function (r, i) { return inspectRule(r, &quot;订阅 rules[&quot; + i + &quot;]&quot;, &quot;&quot;); });
+    var hasMatch = retained.some(function (r) { return /^\s*MATCH\s*,/i.test(r); });
+    if (!hasMatch) {
+      // 仅缺少兜底时补一个；有 MATCH 时完全保留其原有去向和顺序。
+      appendedFinal = &quot;MATCH,&quot; + G.fallback;
+      retained.push(appendedFinal);
+      note(&quot;原订阅缺少 MATCH；已补代理兜底。节点型订阅不等于完整国内分流配置。&quot;);
+    }
+  }
+  Object.keys(subRules).forEach(function (n) {
+    subRules[n] = array(subRules[n], &quot;sub-rules.&quot; + n).map(function (r, i) { return inspectRule(r, &quot;sub-rules.&quot; + n + &quot;[&quot; + i + &quot;]&quot;, n); });
+  });
+  checkCycles(subEdges, &quot;子规则&quot;);
+  Object.keys(ruleProviders).forEach(function (n) {
+    var p = ruleProviders[n];
+    if (!object(p)) fail(&quot;RULESET&quot;, &quot;rule-providers.&quot; + n + &quot; 不是对象。&quot;);
+    if (p.proxy) p.proxy = requireTarget(p.proxy, &quot;规则源 &quot; + n + &quot;.proxy&quot;, true);
+  });
+  // 只对新前缀去重，不删掉原订阅重复规则或改变其顺序。
+  var prefix = unique(addedRules.filter(function (r) { return options.ruleMode !== &quot;stable&quot; || !/^MATCH,/.test(r); }));
+  c.rules = options.ruleMode === &quot;stable&quot; ? prefix.concat(retained) : unique(addedRules);
+  c[&quot;proxy-groups&quot;] = generated.concat(groups);
+  if (c[&quot;rule-providers&quot;] != null || ownedRuleProviders.length) c[&quot;rule-providers&quot;] = ruleProviders;
+  if (c[&quot;sub-rules&quot;] != null) c[&quot;sub-rules&quot;] = subRules;
+  if (!c[&quot;find-process-mode&quot;]) c[&quot;find-process-mode&quot;] = &quot;strict&quot;;
+  c[marker] = { family: &quot;moyu-safe-v5&quot;, revision: revision, ruleMode: options.ruleMode,
+    groupNames: generated.map(function (g) { return g.name; }), addedRules: options.ruleMode === &quot;stable&quot; ? prefix : unique(addedRules), appendedFinal: appendedFinal,
+    ruleProviderNames: ownedRuleProviders, groups: G };
+  emit(&quot;[MOYU_V5:OK] &quot; + revision + &quot; / &quot; + client + &quot; / &quot; + options.ruleMode +
+    &quot;; static=&quot; + concrete.length + &quot;; providers=&quot; + providerNames.length +
+    &quot;; repairedPROXY=&quot; + stats.repairedPROXY + &quot;; rules=&quot; + c.rules.length);
+  notices.forEach(function (text) { emit(&quot;[MOYU_V5:NOTICE] &quot; + text); });
+  return c;
+}
+
+// 入口：只绑定到一个机场订阅；不要同时叠加旧脚本。
+function main(config, profileName) {
+  return moyuSafeV5(config, &quot;verge&quot;);
+}
+// END MOYU_SAFE_V5_0_0_VERGE
+</textarea>
+<div class="meta"><span id="count-verge"></span><span id="changed-verge">原稿</span></div>
+<p id="status-verge" class="status" role="status" aria-live="polite">在框内滚动查看，复制按钮会复制全部内容。</p>
+<details class="hash"><summary>原稿 SHA-256</summary><code>8da6bdd9c322e1d678c82b073d5f277f9cdca3c8757796ab453fb1a0655b2545</code><p>此值对应未修改的 .js 原稿；编辑后的文件应重新计算校验值。</p></details>
+</section><section class="card" aria-labelledby="title-flclash">
+<div class="card-head"><div><span class="eyebrow">02 · 备用</span><h2 id="title-flclash">FlClash 备用</h2></div><span class="badge">V5.0.0</span></div>
+<p class="path">机场订阅 → 扩展 / 覆写 → 脚本 → 绑定</p>
+<div class="toolbar"><button class="primary" data-act="copy" data-target="flclash">复制完整脚本</button><button data-act="download" data-target="flclash">下载 .js</button><button data-act="reset" data-target="flclash">恢复原稿</button></div>
+<label class="sr-only" for="code-flclash">FlClash 备用 完整脚本，可编辑</label>
+<textarea id="code-flclash" data-file="FlClash_V5_resend_dd127314.js" spellcheck="false" autocorrect="off" autocapitalize="off" autocomplete="off" wrap="off">/*
+ * 墨鱼思路适配 · Safe V5.0.0 · 2026-11-11
+ * 非墨鱼作者官方脚本。安装位置见本文件末尾的 main() 与随附说明。
+ * 默认 stable：本地个性化规则 + 原订阅规则，不新增远程规则下载。
+ * 可选 moyu-full：保留 V4 的 21 个远程规则集合；有联网/缓存依赖，非默认。
+ * 保留节点、provider、原策略组；不修改 DNS/TUN/端口/模式/IPv6/证书校验。
+ * 严格的结构/引用预检不等于 Mihomo 内核校验，更不能证明真实节点可用。
+ * 脚本不访问网络/文件，不打印订阅内容或令牌，不用 eval / require。
+ */
+
+function moyuSafeV5(input, client) {
+  &quot;use strict&quot;;
+  // ===== 可编辑选项：通常无需修改 =====
+  var options = {
+    ruleMode: &quot;stable&quot;,             // &quot;stable&quot; 推荐；&quot;moyu-full&quot; 启用旧版远程规则
+    preferredAiNode: &quot;&quot;,
+    repairMissingPROXY: true,        // 仅修复规则/策略组中不存在的字面量 PROXY
+    hideOriginalGroups: false,      // 默认保留机场原分组的可见性
+    enableAdBlock: false,           // 仅 moyu-full 可用；稳定版不增加广告下载
+    blockChatGPTQUIC: false,        // 不默认封禁 UDP/QUIC
+    directDomains: [&quot;digital-xian.com&quot;, &quot;cnwest.com&quot;, &quot;seagm.com&quot;, &quot;seagm-media.seagmcdn.com&quot;],
+    proxyDomains: [],               // 只写域名，不写 URL；走“全部节点”
+    extraRules: []                  // 高级：完整 Mihomo 规则；目标必须真实存在
+  };
+  var revision = &quot;5.0.0&quot;;
+  var marker = &quot;x-moyu-safe-v5&quot;;
+  var ownedPrefix = &quot;moyu_safe_v5_&quot;;
+  var notices = [];
+  var stats = { repairedPROXY: 0 };
+  function object(v) { return v !== null &amp;&amp; typeof v === &quot;object&quot; &amp;&amp; !Array.isArray(v); }
+  function has(o, k) { return Object.prototype.hasOwnProperty.call(o, k); }
+  function dict() { return Object.create(null); }
+  function fail(code, message) { throw new Error(&quot;[MOYU_V5:&quot; + code + &quot;] &quot; + message); }
+  function note(message) { if (notices.length &lt; 12) notices.push(message); }
+  function emit(message) {
+    if (typeof console !== &quot;undefined&quot; &amp;&amp; typeof console.log === &quot;function&quot;) console.log(message);
+  }
+  function array(v, where) {
+    if (v == null) return [];
+    if (!Array.isArray(v)) fail(&quot;TYPE&quot;, where + &quot; 必须是数组。请检查原订阅或其它覆写。&quot;);
+    return v;
+  }
+  function map(v, where) {
+    if (v == null) return {};
+    if (!object(v)) fail(&quot;TYPE&quot;, where + &quot; 必须是对象。&quot;);
+    return v;
+  }
+  function name(v, where) {
+    if (typeof v !== &quot;string&quot; || !v.trim() || /[\r\n\0]/.test(v)) fail(&quot;NAME&quot;, where + &quot; 名称为空或含非法换行。&quot;);
+    return v;
+  }
+  function unique(values) {
+    var seen = dict();
+    return values.filter(function (v) { if (has(seen, v)) return false; seen[v] = true; return true; });
+  }
+  function domains(values, where) {
+    return array(values, where).map(function (d) {
+      if (typeof d !== &quot;string&quot;) fail(&quot;DOMAIN&quot;, where + &quot; 必须仅包含域名字符串。&quot;);
+      d = d.trim().toLowerCase();
+      if (!/^(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9-]+$/.test(d)) {
+        fail(&quot;DOMAIN&quot;, where + &quot; 只接受域名，不接受协议、路径、端口、通配符或逗号。&quot;);
+      }
+      return d;
+    });
+  }
+  if (!object(input)) fail(&quot;INPUT&quot;, &quot;需绑定已有机场订阅；输入不是配置对象。&quot;);
+  if (options.ruleMode !== &quot;stable&quot; &amp;&amp; options.ruleMode !== &quot;moyu-full&quot;) fail(&quot;OPTION&quot;, &quot;ruleMode 只能为 stable / moyu-full。&quot;);
+  if (input[&quot;x-moyu-verge-adapter&quot;]) fail(&quot;OLD_V4&quot;, &quot;检测到 V4 仍在上游执行。请清除旧脚本/覆写，只保留本订阅的 V5。&quot;);
+  if (options.enableAdBlock &amp;&amp; options.ruleMode !== &quot;moyu-full&quot;) note(&quot;稳定版未启用远程广告集；enableAdBlock 仅在 moyu-full 生效。&quot;);
+  // 所有修改发生在副本；任一检查失败，都不会留下半修改的输入。
+  var c;
+  try { c = JSON.parse(JSON.stringify(input)); }
+  catch (e) { fail(&quot;JSON&quot;, &quot;配置不是可序列化对象；未修改原输入。&quot;); }
+  var old = c[marker];
+  var reapply = object(old) &amp;&amp; old.family === &quot;moyu-safe-v5&quot;;
+  if (old != null &amp;&amp; !reapply) fail(&quot;MARKER&quot;, &quot;已有未知同名标记；请检查其它覆写。&quot;);
+  var nodes = array(c.proxies, &quot;proxies&quot;);
+  var providers = map(c[&quot;proxy-providers&quot;], &quot;proxy-providers&quot;);
+  var ruleProviders = map(c[&quot;rule-providers&quot;], &quot;rule-providers&quot;);
+  var groups = array(c[&quot;proxy-groups&quot;], &quot;proxy-groups&quot;);
+  var originalRules = array(c.rules, &quot;rules&quot;);
+  var subRules = map(c[&quot;sub-rules&quot;], &quot;sub-rules&quot;);
+  var providerNames = Object.keys(providers);
+  // 删除的是带有本脚本标记的自身产物，不靠模糊名称删除机场内容。
+  if (reapply) {
+    var previousNames = dict();
+    array(old.groupNames, &quot;V5.groupNames&quot;).forEach(function (n) { previousNames[n] = true; });
+    groups = groups.filter(function (g) { return !(object(g) &amp;&amp; has(previousNames, g.name)); });
+    var previousPrefix = array(old.addedRules, &quot;V5.addedRules&quot;);
+    if (previousPrefix.some(function (r, i) { return originalRules[i] !== r; })) {
+      fail(&quot;REAPPLY_CHANGED&quot;, &quot;V5 前缀被其它脚本改写。请只保留一个扩展，并从原始订阅重新应用。&quot;);
+    }
+    originalRules = originalRules.slice(previousPrefix.length);
+    if (old.appendedFinal) {
+      if (originalRules[originalRules.length - 1] !== old.appendedFinal) fail(&quot;REAPPLY_CHANGED&quot;, &quot;V5 兜底被其它脚本改写；请从原始订阅重新应用。&quot;);
+      originalRules.pop();
+    }
+    array(old.ruleProviderNames, &quot;V5.ruleProviderNames&quot;).forEach(function (n) { delete ruleProviders[n]; });
+    delete c[marker];
+    if (old.ruleMode === &quot;moyu-full&quot; &amp;&amp; options.ruleMode === &quot;stable&quot;) {
+      fail(&quot;RELOAD_SOURCE&quot;, &quot;从完整模式切回稳定模式，请重新应用原始订阅；不要把最终运行配置当作订阅原文。&quot;);
+    }
+  }
+  if (!nodes.length &amp;&amp; !providerNames.length) {
+    emit(&quot;[MOYU_V5:SKIP_EMPTY] 没有节点或 provider；跳过增强，未创建占位节点。请先导入有效订阅。&quot;);
+    return input;
+  }
+  var builtins = [&quot;DIRECT&quot;, &quot;REJECT&quot;, &quot;REJECT-DROP&quot;, &quot;PASS&quot;, &quot;PASS-RULE&quot;, &quot;COMPATIBLE&quot;, &quot;GLOBAL&quot;];
+  var all = dict(), nodeByName = dict(), groupByName = dict();
+  builtins.forEach(function (n) { all[n] = &quot;builtin&quot;; });
+  var nonProxyTypes = [&quot;direct&quot;, &quot;reject&quot;, &quot;reject-drop&quot;, &quot;rejectdrop&quot;, &quot;pass&quot;, &quot;pass-rule&quot;, &quot;passrule&quot;, &quot;compatible&quot;, &quot;dns&quot;];
+  var concrete = [];
+  nodes.forEach(function (n, i) {
+    if (!object(n)) fail(&quot;NODE&quot;, &quot;proxies[&quot; + i + &quot;] 不是节点对象。&quot;);
+    name(n.name, &quot;proxies[&quot; + i + &quot;]&quot;);
+    if (has(all, n.name)) fail(&quot;DUPLICATE&quot;, &quot;节点重名/占用保留名：&quot; + n.name);
+    if (typeof n.type !== &quot;string&quot; || !n.type) fail(&quot;NODE_TYPE&quot;, &quot;节点缺少 type：&quot; + n.name);
+    all[n.name] = &quot;node&quot;; nodeByName[n.name] = n;
+    if (nonProxyTypes.indexOf(n.type.toLowerCase()) &lt; 0) concrete.push(n.name);
+  });
+  groups.forEach(function (g, i) {
+    if (!object(g)) fail(&quot;GROUP&quot;, &quot;proxy-groups[&quot; + i + &quot;] 不是对象。&quot;);
+    name(g.name, &quot;proxy-groups[&quot; + i + &quot;]&quot;);
+    if (has(all, g.name) &amp;&amp; g.name !== &quot;GLOBAL&quot;) fail(&quot;DUPLICATE&quot;, &quot;节点/策略组重名：&quot; + g.name);
+    if (has(groupByName, g.name)) fail(&quot;DUPLICATE&quot;, &quot;策略组重名：&quot; + g.name);
+    if (typeof g.type !== &quot;string&quot; || !g.type) fail(&quot;GROUP_TYPE&quot;, &quot;策略组缺少 type：&quot; + g.name);
+    all[g.name] = &quot;group&quot;; groupByName[g.name] = g;
+    if (options.hideOriginalGroups &amp;&amp; g.name !== &quot;GLOBAL&quot;) g.hidden = true;
+  });
+  if (!concrete.length &amp;&amp; !providerNames.length) fail(&quot;NO_PROXY&quot;, &quot;只有直连/拒绝出站，没有可供代理使用的节点。&quot;);
+  providerNames.forEach(function (n) {
+    name(n, &quot;proxy-providers&quot;);
+    var p = providers[n];
+    if (!object(p)) fail(&quot;PROVIDER&quot;, &quot;proxy-providers.&quot; + n + &quot; 不是对象。&quot;);
+    if ([&quot;http&quot;, &quot;file&quot;, &quot;inline&quot;].indexOf(p.type) &lt; 0) fail(&quot;PROVIDER_TYPE&quot;, &quot;节点源类型不是 http/file/inline：&quot; + n);
+    if (p.type === &quot;http&quot; &amp;&amp; (typeof p.url !== &quot;string&quot; || !/^https?:\/\//i.test(p.url))) fail(&quot;PROVIDER_URL&quot;, &quot;HTTP 节点源缺少有效 URL：&quot; + n);
+    if (p.type === &quot;file&quot; &amp;&amp; (typeof p.path !== &quot;string&quot; || !p.path)) fail(&quot;PROVIDER_PATH&quot;, &quot;本地节点源缺少 path：&quot; + n);
+    if (p.type === &quot;inline&quot; &amp;&amp; !Array.isArray(p.payload)) fail(&quot;PROVIDER_PAYLOAD&quot;, &quot;inline 节点源缺少 payload 数组：&quot; + n);
+    if (typeof p.url === &quot;string&quot; &amp;&amp; /^https?:\/\/(?:www\.)?t\.me\/ddgksf2021\.yaml(?:[?#/]|$)/i.test(p.url)) {
+      fail(&quot;TEMPLATE&quot;, &quot;发现墨鱼模板占位节点源；这不是机场订阅，请移除旧 YAML 覆写。&quot;);
+    }
+  });
+  // 名称碰撞时分配新名称；从不覆盖机场同名节点/策略组。
+  function allocate(base) {
+    var n = base, i = 2;
+    while (has(all, n) || has(providers, n)) { n = base + &quot; #&quot; + i; i++; }
+    all[n] = &quot;group&quot;;
+    return n;
+  }
+  var G = {
+    manual: allocate(&quot;🚀 墨鱼V5·全部节点&quot;), ai: allocate(&quot;🤖 墨鱼V5·AI&quot;),
+    global: allocate(&quot;🌏 墨鱼V5·全球代理&quot;), media: allocate(&quot;🎬 墨鱼V5·国际媒体&quot;),
+    google: allocate(&quot;🌌 墨鱼V5·谷歌服务&quot;), telegram: allocate(&quot;📟 墨鱼V5·电报消息&quot;),
+    apple: allocate(&quot;🍎 墨鱼V5·苹果服务&quot;), microsoft: allocate(&quot;🪟 墨鱼V5·微软服务&quot;),
+    bilibili: allocate(&quot;📺 墨鱼V5·哔哩哔哩&quot;), game: allocate(&quot;🎮 墨鱼V5·游戏平台&quot;),
+    download: allocate(&quot;📥 墨鱼V5·下载分流&quot;), fallback: allocate(&quot;🐟 墨鱼V5·兜底分流&quot;)
+  };
+  function selectable(n, first, preferred) {
+    var choices = unique(first.concat(concrete));
+    if (preferred &amp;&amp; concrete.indexOf(preferred) &gt;= 0) {
+      choices = [preferred].concat(choices.filter(function (x) { return x !== preferred; }));
+    }
+    var g = { name: n, type: &quot;select&quot;, &quot;empty-fallback&quot;: &quot;REJECT&quot; };
+    // provider-only 绝不把 REJECT 塞入 proxies；节点源展开后自然取真实节点。
+    if (choices.length) g.proxies = choices;
+    if (providerNames.length) g.use = providerNames.slice();
+    if (preferred &amp;&amp; concrete.indexOf(preferred) &gt;= 0) g[&quot;default-selected&quot;] = preferred;
+    return g;
+  }
+  var generated = [selectable(G.manual, [], &quot;&quot;), selectable(G.ai, [], options.preferredAiNode)];
+  [&quot;global&quot;, &quot;media&quot;, &quot;google&quot;, &quot;telegram&quot;, &quot;fallback&quot;].forEach(function (key) {
+    generated.push(selectable(G[key], [G.manual, &quot;DIRECT&quot;], &quot;&quot;));
+  });
+  [&quot;apple&quot;, &quot;microsoft&quot;, &quot;bilibili&quot;, &quot;game&quot;, &quot;download&quot;].forEach(function (key) {
+    generated.push(selectable(G[key], [&quot;DIRECT&quot;, G.manual], &quot;&quot;));
+  });
+  generated.forEach(function (g) { groupByName[g.name] = g; });
+  if (options.preferredAiNode &amp;&amp; concrete.indexOf(options.preferredAiNode) &lt; 0) {
+    note(&quot;旧首选 AI 节点不在静态节点中；未写入失效 default-selected，请在 AI 组选择可用具体节点。&quot;);
+  }
+  function requireTarget(target, where, mayRepair) {
+    name(target, where);
+    if (has(all, target)) return target;
+    if (target === &quot;PROXY&quot; &amp;&amp; options.repairMissingPROXY &amp;&amp; mayRepair) {
+      stats.repairedPROXY++; return G.manual;
+    }
+    fail(&quot;MISSING_TARGET&quot;, where + &quot; 引用不存在的目标：&quot; + target + &quot;。未擅自改为 DIRECT；请修复来源配置。&quot;);
+  }
+  function requireProvider(n, where) {
+    if (!has(providers, n)) fail(&quot;MISSING_PROVIDER&quot;, where + &quot; 引用了未定义的节点源：&quot; + n);
+  }
+  // 筛选表达式属于内核语义（含 regexp2），不能用 JS 正则近似后误报循环。
+  // 仍校验所有引用；只把确定存在的关系纳入脚本层循环检查。
+  function dynamicSelection(g) { return !!(g.filter || g[&quot;exclude-filter&quot;] || g[&quot;exclude-type&quot;]); }
+  // 检查组引用、节点链式拨号与 provider 下载出口。
+  var edges = dict();
+  Object.keys(groupByName).forEach(function (n) { edges[n] = []; });
+  Object.keys(nodeByName).forEach(function (n) { edges[n] = []; });
+  Object.keys(groupByName).forEach(function (n) {
+    var g = groupByName[n];
+    if (g.proxies != null) {
+      g.proxies = unique(array(g.proxies, n + &quot;.proxies&quot;).map(function (p) { return requireTarget(p, n + &quot;.proxies&quot;, true); }));
+      edges[n] = g.proxies.filter(function (p) {
+        return all[p] === &quot;group&quot; || !(g[&quot;exclude-filter&quot;] || g[&quot;exclude-type&quot;]);
+      });
+    }
+    array(g.use, n + &quot;.use&quot;).forEach(function (p) { requireProvider(p, n + &quot;.use&quot;); });
+    if ((g[&quot;include-all&quot;] || g[&quot;include-all-proxies&quot;]) &amp;&amp; !dynamicSelection(g)) {
+      edges[n] = edges[n].concat(Object.keys(nodeByName));
+    }
+    if (dynamicSelection(g)) note(&quot;含筛选表达式的动态节点依赖交由内核验证，脚本不据此臆测循环。&quot;);
+    if (!array(g.proxies, n + &quot;.proxies&quot;).length &amp;&amp; !array(g.use, n + &quot;.use&quot;).length &amp;&amp; !g[&quot;include-all&quot;] &amp;&amp; !g[&quot;include-all-proxies&quot;] &amp;&amp; !g[&quot;include-all-providers&quot;]) {
+      fail(&quot;EMPTY_GROUP&quot;, &quot;策略组没有候选节点/节点源：&quot; + n);
+    }
+    if (g[&quot;empty-fallback&quot;] != null) {
+      var fallback = requireTarget(g[&quot;empty-fallback&quot;], n + &quot;.empty-fallback&quot;, false);
+      if (all[fallback] === &quot;group&quot; || fallback === &quot;GLOBAL&quot;) fail(&quot;FALLBACK_GROUP&quot;, &quot;empty-fallback 只能填节点/内置出站，不能填策略组：&quot; + n);
+    }
+  });
+  Object.keys(nodeByName).forEach(function (n) {
+    var p = nodeByName[n];
+    if (p[&quot;dialer-proxy&quot;]) edges[n].push(requireTarget(p[&quot;dialer-proxy&quot;], n + &quot;.dialer-proxy&quot;, false));
+  });
+  providerNames.forEach(function (n) {
+    var p = providers[n];
+    // 下载出口是启动依赖；不能凭空把缺失 PROXY 指向含自身的组。
+    if (p.proxy) requireTarget(p.proxy, &quot;节点源 &quot; + n + &quot;.proxy&quot;, false);
+    var override = map(p.override, &quot;节点源 &quot; + n + &quot;.override&quot;);
+    if (override[&quot;dialer-proxy&quot;]) {
+      var target = requireTarget(override[&quot;dialer-proxy&quot;], &quot;节点源 &quot; + n + &quot;.override.dialer-proxy&quot;, false);
+      Object.keys(groupByName).forEach(function (gn) {
+        var g = groupByName[gn];
+        if (!dynamicSelection(g) &amp;&amp; (array(g.use, gn + &quot;.use&quot;).indexOf(n) &gt;= 0 || g[&quot;include-all&quot;] || g[&quot;include-all-providers&quot;])) edges[gn].push(target);
+      });
+    }
+    if (p.type === &quot;inline&quot;) array(p.payload, &quot;节点源 &quot; + n + &quot;.payload&quot;).forEach(function (entry, i) {
+      if (!object(entry) || !entry.name || !entry.type) fail(&quot;INLINE_NODE&quot;, &quot;inline 节点条目缺失 name/type：&quot; + n + &quot;[&quot; + i + &quot;]&quot;);
+      if (entry[&quot;dialer-proxy&quot;]) {
+        var t = requireTarget(entry[&quot;dialer-proxy&quot;], &quot;inline 节点 dialer-proxy&quot;, false);
+        Object.keys(groupByName).forEach(function (gn) {
+          var g = groupByName[gn];
+          if (!dynamicSelection(g) &amp;&amp; (array(g.use, gn + &quot;.use&quot;).indexOf(n) &gt;= 0 || g[&quot;include-all&quot;] || g[&quot;include-all-providers&quot;])) edges[gn].push(t);
+        });
+      }
+    });
+  });
+  // 非递归 DFS：大型配置不因递归栈耗尽而崩溃。
+  function checkCycles(graph, label) {
+    var color = dict();
+    Object.keys(graph).forEach(function (root) {
+      if (color[root] === 2) return;
+      var stack = [{ n: root, i: 0 }]; color[root] = 1;
+      while (stack.length) {
+        var frame = stack[stack.length - 1];
+        var links = graph[frame.n] || [];
+        if (frame.i &gt;= links.length) { color[frame.n] = 2; stack.pop(); continue; }
+        var next = links[frame.i++];
+        if (!has(graph, next)) continue;
+        if (color[next] === 1) fail(&quot;CYCLE&quot;, label + &quot; 存在循环依赖，涉及：&quot; + next);
+        if (color[next] !== 2) { color[next] = 1; stack.push({ n: next, i: 0 }); }
+      }
+    });
+  }
+  checkCycles(edges, &quot;节点/策略组&quot;);
+  // 自定义规则优先；已知的共享字节域名沿用旧版，不额外扩展范围。
+  var rules = [];
+  function add(type, values, target) {
+    values.forEach(function (v) { rules.push(type + &quot;,&quot; + v + &quot;,&quot; + target); });
+  }
+  var localRules = [
+    &quot;IP-CIDR,100.64.0.0/10,DIRECT,no-resolve&quot;,
+    &quot;IP-CIDR6,fd7a:115c:a1e0::/48,DIRECT,no-resolve&quot;,
+    &quot;DOMAIN-SUFFIX,ts.net,DIRECT&quot;,
+    &quot;PROCESS-NAME,tailscaled.exe,DIRECT&quot;,
+    &quot;PROCESS-NAME,tailscale.exe,DIRECT&quot;,
+    &quot;PROCESS-NAME,tailscale-ipn.exe,DIRECT&quot;,
+    &quot;DOMAIN-SUFFIX,localhost,DIRECT&quot;,
+    &quot;DOMAIN-SUFFIX,local,DIRECT&quot;,
+    &quot;DOMAIN-SUFFIX,lan,DIRECT&quot;,
+    &quot;IP-CIDR,127.0.0.0/8,DIRECT,no-resolve&quot;,
+    &quot;IP-CIDR,10.0.0.0/8,DIRECT,no-resolve&quot;,
+    &quot;IP-CIDR,172.16.0.0/12,DIRECT,no-resolve&quot;,
+    &quot;IP-CIDR,192.168.0.0/16,DIRECT,no-resolve&quot;,
+    &quot;IP-CIDR,169.254.0.0/16,DIRECT,no-resolve&quot;,
+    &quot;IP-CIDR6,::1/128,DIRECT,no-resolve&quot;,
+    &quot;IP-CIDR6,fc00::/7,DIRECT,no-resolve&quot;,
+    &quot;IP-CIDR6,fe80::/10,DIRECT,no-resolve&quot;
+  ];
+  rules = rules.concat(localRules);
+  add(&quot;DOMAIN-SUFFIX&quot;, domains(options.directDomains, &quot;directDomains&quot;), &quot;DIRECT&quot;);
+  var feishuDomains = [
+    &quot;feishu.cn&quot;, &quot;feishu.net&quot;, &quot;feishucdn.com&quot;, &quot;feishuimg.com&quot;,
+    &quot;feishuapp.cn&quot;, &quot;getfeishu.cn&quot;, &quot;feishupkg.com&quot;,
+    &quot;feishu-3rd-party-services.com&quot;, &quot;baseopendev.com&quot;, &quot;larkoffice.com&quot;,
+    &quot;zjurl.cn&quot;, &quot;snssdk.com&quot;, &quot;pstatp.com&quot;, &quot;byteimg.com&quot;,
+    &quot;bytedance.net&quot;, &quot;bytedance.com&quot;, &quot;byted-static.com&quot;,
+    &quot;bytegoofy.com&quot;, &quot;bytehwm.com&quot;, &quot;ttwebview.com&quot;, &quot;bytegecko.com&quot;,
+    &quot;bytescm.com&quot;, &quot;kundou.cn&quot;, &quot;bytetos.com&quot;, &quot;ibytedtos.com&quot;,
+    &quot;zijieapi.com&quot;, &quot;byteeffecttos.com&quot;, &quot;bytednsdoc.com&quot;,
+    &quot;bytedanceapi.com&quot;, &quot;volcvideo.com&quot;, &quot;bytevcloud.com&quot;, &quot;feelgood.cn&quot;
+  ];
+  add(&quot;DOMAIN-SUFFIX&quot;, feishuDomains, &quot;DIRECT&quot;);
+  add(&quot;PROCESS-NAME&quot;, [&quot;Feishu.exe&quot;, &quot;feishu.exe&quot;, &quot;Lark.exe&quot;, &quot;lark.exe&quot;], &quot;DIRECT&quot;);
+  add(&quot;DOMAIN-SUFFIX&quot;, domains(options.proxyDomains, &quot;proxyDomains&quot;), G.global);
+  array(options.extraRules, &quot;extraRules&quot;).forEach(function (r) {
+    if (typeof r === &quot;string&quot; &amp;&amp; /^\s*(MATCH|FINAL)\s*,/i.test(r)) fail(&quot;EXTRA_MATCH&quot;, &quot;extraRules 不得提前插入 MATCH/FINAL，以免吞掉后续所有规则。&quot;);
+    rules.push(r);
+  });
+  var aiDomains = [
+    &quot;chatgpt.com&quot;, &quot;openai.com&quot;, &quot;oaistatic.com&quot;, &quot;oaiusercontent.com&quot;, &quot;oaistatsig.com&quot;,
+    &quot;claude.ai&quot;, &quot;claude.com&quot;, &quot;anthropic.com&quot;, &quot;claudeusercontent.com&quot;, &quot;grok.com&quot;, &quot;x.ai&quot;
+  ];
+  var chatgptExactDomains = [
+    &quot;challenges.cloudflare.com&quot;, &quot;cdn.openaimerge.com&quot;,
+    &quot;cdn.workos.com&quot;, &quot;forwarder.workos.com&quot;,
+    &quot;frontend-apps-multi-region.workos.com&quot;, &quot;setup.workos.com&quot;,
+    &quot;images.workoscdn.com&quot;, &quot;workos.imgix.net&quot;
+  ];
+  // Gemini / Copilot 只加入明确域名，不把所有 Google/Microsoft 域名划入 AI。
+  aiDomains = aiDomains.concat([&quot;gemini.google.com&quot;, &quot;aistudio.google.com&quot;, &quot;generativelanguage.googleapis.com&quot;, &quot;copilot.microsoft.com&quot;]);
+  if (options.blockChatGPTQUIC) {
+    [&quot;chatgpt.com&quot;, &quot;openai.com&quot;, &quot;oaistatic.com&quot;, &quot;oaiusercontent.com&quot;, &quot;oaistatsig.com&quot;].forEach(function (d) {
+      rules.push(&quot;AND,((NETWORK,UDP),(DST-PORT,443),(DOMAIN-SUFFIX,&quot; + d + &quot;)),REJECT&quot;);
+    });
+  }
+  add(&quot;DOMAIN&quot;, chatgptExactDomains, G.ai);
+  add(&quot;DOMAIN-SUFFIX&quot;, aiDomains, G.ai);
+  add(&quot;PROCESS-NAME&quot;, [&quot;Codex.exe&quot;, &quot;codex.exe&quot;], G.ai);
+  var ownedRuleProviders = [];
+  if (options.ruleMode === &quot;moyu-full&quot;) {
+    var bmBase = &quot;https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/&quot;;
+    var metaBase = &quot;https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/&quot;;
+    var specs = [
+    [&quot;openai&quot;, metaBase + &quot;geosite/openai.list&quot;, &quot;domain&quot;, &quot;text&quot;, G.ai],
+    [&quot;anthropic&quot;, metaBase + &quot;geosite/anthropic.list&quot;, &quot;domain&quot;, &quot;text&quot;, G.ai],
+    [&quot;gemini&quot;, metaBase + &quot;geosite/google-gemini.list&quot;, &quot;domain&quot;, &quot;text&quot;, G.ai],
+    [&quot;xai&quot;, metaBase + &quot;geosite/xai.list&quot;, &quot;domain&quot;, &quot;text&quot;, G.ai],
+    [&quot;biliintl&quot;, metaBase + &quot;geosite/biliintl.list&quot;, &quot;domain&quot;, &quot;text&quot;, G.media],
+    [&quot;bilibili&quot;, bmBase + &quot;BiliBili/BiliBili.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.bilibili],
+    [&quot;bahamut&quot;, bmBase + &quot;Bahamut/Bahamut.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.media],
+    [&quot;media&quot;, bmBase + &quot;GlobalMedia/GlobalMedia_Classical.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.media],
+    [&quot;github&quot;, bmBase + &quot;GitHub/GitHub.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.global],
+    [&quot;telegram_domain&quot;, metaBase + &quot;geosite/telegram.list&quot;, &quot;domain&quot;, &quot;text&quot;, G.telegram],
+    [&quot;telegram_ip&quot;, metaBase + &quot;geoip/telegram.mrs&quot;, &quot;ipcidr&quot;, &quot;mrs&quot;, G.telegram],
+    [&quot;twitter&quot;, bmBase + &quot;Twitter/Twitter.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.global],
+    [&quot;google&quot;, bmBase + &quot;Google/Google.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.google],
+    [&quot;download&quot;, bmBase + &quot;Download/Download.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.download],
+    [&quot;apple&quot;, bmBase + &quot;Apple/Apple_Classical.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.apple],
+    [&quot;microsoft&quot;, bmBase + &quot;Microsoft/Microsoft.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.microsoft],
+    [&quot;game&quot;, bmBase + &quot;Game/Game.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.game],
+    [&quot;proxy&quot;, bmBase + &quot;ProxyLite/ProxyLite.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, G.global],
+    [&quot;direct&quot;, bmBase + &quot;Direct/Direct.yaml&quot;, &quot;classical&quot;, &quot;yaml&quot;, &quot;DIRECT&quot;],
+    [&quot;cn_domain&quot;, metaBase + &quot;geosite/cn.mrs&quot;, &quot;domain&quot;, &quot;mrs&quot;, &quot;DIRECT&quot;],
+    [&quot;cn_ip&quot;, metaBase + &quot;geoip/cn.mrs&quot;, &quot;ipcidr&quot;, &quot;mrs&quot;, &quot;DIRECT&quot;]
+  ];
+    if (options.enableAdBlock) specs.splice(4, 0, [&quot;ads&quot;, metaBase + &quot;geosite/category-ads-all.mrs&quot;, &quot;domain&quot;, &quot;mrs&quot;, &quot;REJECT&quot;]);
+    add(&quot;DOMAIN-SUFFIX&quot;, [&quot;github.com&quot;, &quot;githubusercontent.com&quot;, &quot;githubassets.com&quot;], G.global);
+    specs.forEach(function (spec) {
+      var id = ownedPrefix + spec[0];
+      if (has(ruleProviders, id)) fail(&quot;PROVIDER_COLLISION&quot;, &quot;规则集合重名：&quot; + id);
+      ruleProviders[id] = { type: &quot;http&quot;, behavior: spec[2], format: spec[3], url: spec[1],
+        path: &quot;./ruleset/moyu-safe-v5/&quot; + spec[0] + &quot;.&quot; + (spec[3] === &quot;text&quot; ? &quot;list&quot; : spec[3]),
+        interval: 86400, proxy: G.manual };
+      ownedRuleProviders.push(id);
+      if (spec[0] === &quot;telegram_domain&quot;) add(&quot;PROCESS-NAME&quot;, [&quot;Telegram.exe&quot;, &quot;telegram-desktop&quot;], G.telegram);
+      rules.push(&quot;RULE-SET,&quot; + id + &quot;,&quot; + spec[4] + (spec[2] === &quot;classical&quot; || spec[0] === &quot;telegram_ip&quot; ? &quot;,no-resolve&quot; : &quot;&quot;));
+    });
+    rules.push(&quot;MATCH,&quot; + G.fallback);
+    note(&quot;moyu-full 已接管原订阅 rules；新增远程规则集合，网络失败仍可能影响初始化/更新。&quot;);
+  } else {
+    // 稳定版的本地分类是常见域名集合，并非 21 个远程集合的完整离线镜像。
+    add(&quot;DOMAIN-SUFFIX&quot;, [&quot;biliintl.com&quot;, &quot;bilibili.tv&quot;, &quot;bahamut.com.tw&quot;, &quot;gamer.com.tw&quot;, &quot;netflix.com&quot;, &quot;netflix.net&quot;, &quot;nflxvideo.net&quot;, &quot;nflximg.net&quot;, &quot;nflxso.net&quot;, &quot;nflxext.com&quot;, &quot;disneyplus.com&quot;, &quot;dssott.com&quot;, &quot;bamgrid.com&quot;, &quot;youtube.com&quot;, &quot;youtu.be&quot;, &quot;ytimg.com&quot;, &quot;googlevideo.com&quot;, &quot;spotify.com&quot;, &quot;scdn.co&quot;], G.media);
+    add(&quot;DOMAIN-SUFFIX&quot;, [&quot;steamcontent.com&quot;, &quot;steamserver.net&quot;, &quot;download.windowsupdate.com&quot;, &quot;dl.delivery.mp.microsoft.com&quot;, &quot;swdownload.apple.com&quot;, &quot;updates.cdn-apple.com&quot;], G.download);
+    add(&quot;DOMAIN-SUFFIX&quot;, [&quot;bilibili.com&quot;, &quot;biliapi.net&quot;, &quot;biliapi.com&quot;, &quot;bilivideo.com&quot;, &quot;bilivideo.cn&quot;, &quot;hdslb.com&quot;], G.bilibili);
+    add(&quot;DOMAIN-SUFFIX&quot;, [&quot;telegram.org&quot;, &quot;telegram.me&quot;, &quot;t.me&quot;, &quot;telegra.ph&quot;, &quot;tdesktop.com&quot;], G.telegram);
+    add(&quot;PROCESS-NAME&quot;, [&quot;Telegram.exe&quot;, &quot;telegram-desktop&quot;], G.telegram);
+    add(&quot;DOMAIN-SUFFIX&quot;, [&quot;github.com&quot;, &quot;githubusercontent.com&quot;, &quot;githubassets.com&quot;, &quot;twitter.com&quot;, &quot;x.com&quot;, &quot;t.co&quot;, &quot;twimg.com&quot;], G.global);
+    add(&quot;DOMAIN-SUFFIX&quot;, [&quot;google.com&quot;, &quot;googleapis.com&quot;, &quot;gstatic.com&quot;, &quot;googleusercontent.com&quot;, &quot;gmail.com&quot;], G.google);
+    add(&quot;DOMAIN-SUFFIX&quot;, [&quot;steampowered.com&quot;, &quot;steamcommunity.com&quot;, &quot;steamstatic.com&quot;, &quot;epicgames.com&quot;, &quot;playstation.com&quot;, &quot;playstation.net&quot;, &quot;sonyentertainmentnetwork.com&quot;, &quot;xbox.com&quot;, &quot;xboxlive.com&quot;, &quot;ubisoft.com&quot;, &quot;battle.net&quot;, &quot;ea.com&quot;, &quot;origin.com&quot;, &quot;riotgames.com&quot;], G.game);
+    add(&quot;DOMAIN-SUFFIX&quot;, [&quot;apple.com&quot;, &quot;icloud.com&quot;, &quot;icloud-content.com&quot;, &quot;mzstatic.com&quot;, &quot;apple-cloudkit.com&quot;], G.apple);
+    add(&quot;DOMAIN-SUFFIX&quot;, [&quot;microsoft.com&quot;, &quot;microsoftonline.com&quot;, &quot;live.com&quot;, &quot;outlook.com&quot;, &quot;office.com&quot;, &quot;office.net&quot;, &quot;office365.com&quot;, &quot;onedrive.com&quot;, &quot;windows.com&quot;, &quot;windowsupdate.com&quot;, &quot;bing.com&quot;], G.microsoft);
+  }
+  // 从右侧识别目标，避免把 AND/OR 条件内的逗号误当策略组分隔符。
+  // 完整语法/正则/CIDR 合法性仍交由 Mihomo；这里不伪装成完整内核解析器。
+  function parseRule(rule, where) {
+    if (typeof rule !== &quot;string&quot; || !rule.trim()) fail(&quot;RULE&quot;, where + &quot; 必须是非空规则字符串。&quot;);
+    var parts = rule.split(&quot;,&quot;);
+    var type = parts[0].trim().toUpperCase();
+    var index = parts.length - 1;
+    while (index &gt; 0 &amp;&amp; /^(no-resolve|src)$/i.test(parts[index].trim())) index--;
+    if (index &lt; (type === &quot;MATCH&quot; || type === &quot;FINAL&quot; ? 1 : 2)) fail(&quot;RULE&quot;, where + &quot; 缺少条件或目标。&quot;);
+    return { parts: parts, type: type, index: index, target: parts[index].trim() };
+  }
+  var subEdges = dict();
+  Object.keys(subRules).forEach(function (n) { subEdges[n] = []; });
+  function inspectRule(rule, where, subName) {
+    var parsed = parseRule(rule, where), target = parsed.target;
+    if (parsed.type === &quot;SUB-RULE&quot;) {
+      if (!has(subRules, target)) fail(&quot;MISSING_SUBRULE&quot;, where + &quot; 引用未定义子规则：&quot; + target);
+      if (subName) subEdges[subName].push(target);
+    } else {
+      var resolved = requireTarget(target, where, true);
+      if (resolved !== target) parsed.parts[parsed.index] = resolved;
+    }
+    if (parsed.type === &quot;FINAL&quot;) parsed.parts[0] = &quot;MATCH&quot;;
+    if (parsed.type === &quot;RULE-SET&quot;) {
+      var id = parsed.parts[1].trim();
+      if (!has(ruleProviders, id)) fail(&quot;MISSING_RULESET&quot;, where + &quot; 引用未定义规则集：&quot; + id);
+    }
+    // 逻辑条件中也可以嵌套 RULE-SET。
+    if (/^(AND|OR|NOT|SUB-RULE)$/.test(parsed.type)) {
+      var expression = /\(\s*RULE-SET\s*,\s*([^,()]+)/ig, hit;
+      while ((hit = expression.exec(rule)) !== null) {
+        if (!has(ruleProviders, hit[1].trim())) fail(&quot;MISSING_RULESET&quot;, where + &quot; 内嵌未定义规则集：&quot; + hit[1].trim());
+      }
+    }
+    return parsed.parts.join(&quot;,&quot;);
+  }
+  var addedRules = rules.map(function (r, i) { return inspectRule(r, &quot;新增 rules[&quot; + i + &quot;]&quot;, &quot;&quot;); });
+  var retained = [], appendedFinal = &quot;&quot;;
+  if (options.ruleMode === &quot;stable&quot;) {
+    retained = originalRules.map(function (r, i) { return inspectRule(r, &quot;订阅 rules[&quot; + i + &quot;]&quot;, &quot;&quot;); });
+    var hasMatch = retained.some(function (r) { return /^\s*MATCH\s*,/i.test(r); });
+    if (!hasMatch) {
+      // 仅缺少兜底时补一个；有 MATCH 时完全保留其原有去向和顺序。
+      appendedFinal = &quot;MATCH,&quot; + G.fallback;
+      retained.push(appendedFinal);
+      note(&quot;原订阅缺少 MATCH；已补代理兜底。节点型订阅不等于完整国内分流配置。&quot;);
+    }
+  }
+  Object.keys(subRules).forEach(function (n) {
+    subRules[n] = array(subRules[n], &quot;sub-rules.&quot; + n).map(function (r, i) { return inspectRule(r, &quot;sub-rules.&quot; + n + &quot;[&quot; + i + &quot;]&quot;, n); });
+  });
+  checkCycles(subEdges, &quot;子规则&quot;);
+  Object.keys(ruleProviders).forEach(function (n) {
+    var p = ruleProviders[n];
+    if (!object(p)) fail(&quot;RULESET&quot;, &quot;rule-providers.&quot; + n + &quot; 不是对象。&quot;);
+    if (p.proxy) p.proxy = requireTarget(p.proxy, &quot;规则源 &quot; + n + &quot;.proxy&quot;, true);
+  });
+  // 只对新前缀去重，不删掉原订阅重复规则或改变其顺序。
+  var prefix = unique(addedRules.filter(function (r) { return options.ruleMode !== &quot;stable&quot; || !/^MATCH,/.test(r); }));
+  c.rules = options.ruleMode === &quot;stable&quot; ? prefix.concat(retained) : unique(addedRules);
+  c[&quot;proxy-groups&quot;] = generated.concat(groups);
+  if (c[&quot;rule-providers&quot;] != null || ownedRuleProviders.length) c[&quot;rule-providers&quot;] = ruleProviders;
+  if (c[&quot;sub-rules&quot;] != null) c[&quot;sub-rules&quot;] = subRules;
+  if (!c[&quot;find-process-mode&quot;]) c[&quot;find-process-mode&quot;] = &quot;strict&quot;;
+  c[marker] = { family: &quot;moyu-safe-v5&quot;, revision: revision, ruleMode: options.ruleMode,
+    groupNames: generated.map(function (g) { return g.name; }), addedRules: options.ruleMode === &quot;stable&quot; ? prefix : unique(addedRules), appendedFinal: appendedFinal,
+    ruleProviderNames: ownedRuleProviders, groups: G };
+  emit(&quot;[MOYU_V5:OK] &quot; + revision + &quot; / &quot; + client + &quot; / &quot; + options.ruleMode +
+    &quot;; static=&quot; + concrete.length + &quot;; providers=&quot; + providerNames.length +
+    &quot;; repairedPROXY=&quot; + stats.repairedPROXY + &quot;; rules=&quot; + c.rules.length);
+  notices.forEach(function (text) { emit(&quot;[MOYU_V5:NOTICE] &quot; + text); });
+  return c;
+}
+
+// 入口：只绑定到一个机场订阅；不要同时叠加旧脚本。
+function main(config) {
+  return moyuSafeV5(config, &quot;flclash&quot;);
+}
+// END MOYU_SAFE_V5_0_0_FLCLASH
+</textarea>
+<div class="meta"><span id="count-flclash"></span><span id="changed-flclash">原稿</span></div>
+<p id="status-flclash" class="status" role="status" aria-live="polite">在框内滚动查看，复制按钮会复制全部内容。</p>
+<details class="hash"><summary>原稿 SHA-256</summary><code>75a7f8bd33f7a81cb6de6abfc87b423e42b4b0d8b8fcbf790d335e493e60bf57</code><p>此值对应未修改的 .js 原稿；编辑后的文件应重新计算校验值。</p></details>
+</section></div>
+<details class="help" open><summary>安装后，只需选好两个组</summary><p><strong>🚀 墨鱼V5·全部节点：</strong>选日常节点。<strong>🤖 墨鱼V5·AI：</strong>独立选一个能用 AI 的具体节点。不要只看测速数值，要实际打开服务验证。原机场分组默认仍显示，未被 V5 前置规则覆盖的流量继续按它们的设置分流。</p><p>旧首选 AI 名称只在静态节点中确实存在时才应用；不存在时不写入失效默认值。主组和 AI 组不会因为 provider-only 输入而固定选中 REJECT。</p></details>
+<details class="help"><summary>具体安装位置与回退</summary><h3>Clash Verge Rev</h3><p>「订阅」→ 右键你的机场 →「扩展脚本」→ 全文替换 → 保存。全局脚本与其它覆写保持默认；不要把这份代码粘进 YAML 扩展配置，不要叠加 V4。客户端保持规则模式，系统代理照常使用。</p><h3>FlClash</h3><p>你的机场订阅菜单 →「扩展」（旧版叫「覆写」）→「扩展模式：脚本」→「前往配置脚本」→ 新建、粘贴、保存 → 返回该订阅选中并绑定脚本 → 重新应用。只保存不绑定不会完成安装。不要导入为完整 YAML 自定义配置。</p><h3>回退</h3><p>Verge 将订阅扩展脚本恢复为 <code>function main(config) &#123; return config; &#125;</code> 并重新应用原订阅。FlClash 解除该脚本绑定或切回标准模式。两个客户端不要同时接管系统代理 / TUN。</p></details>
+<details class="help"><summary>稳定模式与完整模式，有什么差别？</summary><table><thead><tr><th>项目</th><th>stable · 默认</th><th>moyu-full · 可选</th></tr></thead><tbody><tr><td>机场原规则</td><td>保留顺序与 MATCH 去向</td><td>由新规则接管</td></tr><tr><td>新增远程规则源</td><td>0 个</td><td>21 个；广告开启后 22 个</td></tr><tr><td>分类覆盖</td><td>常见域名 + 原机场规则</td><td>沿用 V4 的远程规则集</td></tr><tr><td>启动依赖</td><td>不新增规则下载；原依赖仍存在</td><td>需要规则缓存或可用下载通道</td></tr></tbody></table><p>切换方法：把顶部 <code>ruleMode: "stable"</code> 改成 <code>ruleMode: "moyu-full"</code>，保存脚本后重新应用原始订阅。不要将最终运行配置当成原订阅。稳定模式不是完整规则集的离线镜像。</p></details>
+<details class="help"><summary>修复范围与测试边界</summary><p>缺失字面量 PROXY 的规则改指真实存在的组；未知其它错误不猜测为直连。检查重名、缺失引用、已知静态依赖循环和重复应用；异常不会留下半修改的输入。保留全部真实节点及 provider，不按地区或倍率筛节点。DNS、TUN、端口、模式、IPv6 和证书验证不改。</p><p><strong>69 类测试 × 两份脚本 = 138 项通过。</strong>包含截图报错、provider-only、重复执行 100 次与 2000 节点 / 10000 条规则。此数字是 Node.js 脚本层测试，不是 138 次真实代理连通测试。</p><p class="warn">包含筛选表达式的动态依赖交由内核验证，脚本不做不等价的正则模拟。本次没有在你的 Windows/真实机场上运行，也没有完成 Mihomo -t 或两客户端内嵌引擎实机校验。完整远程模式本次未实测下载；软件自身的执行超时、服务异常和节点不可达，不可能靠此脚本一并保证修复。</p><p>直接用默认稳定版。保存后查看是否出现 V5 主组，并分别验证日常网络、AI、飞书、SEAGM。遇到报错，保留完整第一条错误；不要关闭证书校验来绕过。</p></details>
+<details class="help"><summary>核对来源</summary><div class="sources"><a href="https://www.clashverge.dev/guide/script.html" target="_blank" rel="noopener noreferrer">Verge 脚本接口</a><a href="https://www.clashverge.dev/guide/extend.html" target="_blank" rel="noopener noreferrer">Verge 扩展顺序</a><a href="https://github.com/chen08209/FlClash/releases/tag/v0.9.3" target="_blank" rel="noopener noreferrer">FlClash 官方版本</a><a href="https://raw.githubusercontent.com/chen08209/FlClash/v0.9.3/lib/common/javascript.dart" target="_blank" rel="noopener noreferrer">FlClash 返回对象接口</a><a href="https://wiki.metacubex.one/config/proxy-groups/" target="_blank" rel="noopener noreferrer">Mihomo 策略组</a><a href="https://wiki.metacubex.one/config/rules/" target="_blank" rel="noopener noreferrer">Mihomo 规则</a></div></details>
+<footer>Safe V5.0.0 · 根据你的历史脚本重构，非墨鱼作者官方发行版。文本框最高 280 px；iOS 文件预览若禁用按钮，请用浏览器打开，或直接全选文本复制。</footer></main><script>
+"use strict";
+const originals = {};
+function info(key) {
+ const ta=document.getElementById("code-"+key);
+ const lines=ta.value.split("\n").length;
+ document.getElementById("count-"+key).textContent=lines+" 行 · "+new TextEncoder().encode(ta.value).length.toLocaleString()+" 字节 · 最高 280 px";
+ document.getElementById("changed-"+key).textContent=ta.value===originals[key]?"原稿":"已修改";
+}
+function status(key,text){document.getElementById("status-"+key).textContent=text;}
+for(const key of ["verge","flclash"]){
+ const ta=document.getElementById("code-"+key);originals[key]=ta.value;info(key);
+ ta.addEventListener("input",()=>info(key));
+ ta.addEventListener("keydown",event=>{if(event.key==="Tab"){event.preventDefault();ta.setRangeText("  ",ta.selectionStart,ta.selectionEnd,"end");info(key);}});
+}
+async function copyText(key,text){
+ let success=false;
+ if(navigator.clipboard&&window.isSecureContext){try{await navigator.clipboard.writeText(text);success=true;}catch(e){}}
+ if(!success){const ta=document.getElementById("code-"+key);ta.focus();ta.select();try{success=document.execCommand("copy");}catch(e){}}
+ status(key,success?"已复制完整脚本。请替换目标编辑器的全部旧内容。":"浏览器未授予剪贴板权限，已全选脚本；按 Ctrl+C 或长按复制。");
+}
+document.addEventListener("click",async event=>{
+ const button=event.target.closest("button[data-act]");if(!button)return;
+ const key=button.dataset.target,ta=document.getElementById("code-"+key);
+ if(button.dataset.act==="copy"){await copyText(key,ta.value);}
+ if(button.dataset.act==="download"){
+  const blob=new Blob([ta.value],{type:"text/javascript;charset=utf-8"});const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");a.href=url;a.download=ta.dataset.file;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);
+  status(key,"已发起下载当前编辑内容；文件名："+ta.dataset.file);
+ }
+ if(button.dataset.act==="reset"){ta.value=originals[key];info(key);status(key,"已恢复本页随附的原稿。");}
+});
+</script></body></html>
